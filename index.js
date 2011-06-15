@@ -6,7 +6,6 @@ Ext.regModel('poi', {
 	         {name: 'like',   type: 'int'},
 	         {name: 'text',   type: 'string'},
 	         {name: 'image',   type: 'string'},
-	         {name: 'youtube_embed_code',   type: 'string'},
 	         {name: 'lat',   type: 'float'},
 	         {name: 'lng',    type: 'float'}
 	         ]
@@ -26,11 +25,10 @@ var poiList = new Ext.data.Store({
 
 var tpl = new Ext.XTemplate(
 	    '<tpl for=".">',
-	    	'<div class="overlay x-hidden" id="{id}">',
+	    	'<div class="overlay x-hidden {type}" id="{id}">',
 	        '<h1>{title} <img src="fb_like.png" alt="like" style="border:none;"></h1>',
 	        '<p style="font-size:16px;">{text}</p>',
 	        '<img src="{image}" width="420" height="" alt="{title}">',
-	        '<iframe width="100" height="100" src="{youtube_embed_code}" frameborder="0" allowfullscreen>',
 	        '</div>',
 	    '</tpl>',
 	    '<div class="x-clear"></div>'
@@ -51,9 +49,6 @@ var overlays = new Ext.Panel({
         hidden : true
     })
 });
-
-
-	
 
 var newForm = new Ext.form.FormPanel({
     items: [
@@ -177,7 +172,7 @@ Ext.setup({
 		maprender : function(comp, map){
 
 		//Add new PostIt:
-		google.maps.event.addListener(map, 'dblclick', function(event) {
+		google.maps.event.addListener(map, 'click', function(event) {
 			var marker_hinzufuegen = new google.maps.Marker({
 				
 				position: event.latLng,
@@ -197,9 +192,7 @@ Ext.setup({
 	});
 	
 	poiList.load(function(records, operation, success) {
-	    console.log('loaded records');
-	    
-	    poiList.each(function(poi) {
+		poiList.each(function(poi) {
 	    	var markerIcon = '';
 		    if(poi.data.type == 'Project')
 			{
@@ -245,7 +238,7 @@ function showOverlayById(id)
 		cls: 'htmlcontent'
 	});
 	console.log(overlay);
-	overlay.show();
+	overlay.show();at
 }
 
 
